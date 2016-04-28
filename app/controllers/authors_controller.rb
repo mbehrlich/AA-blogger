@@ -7,8 +7,10 @@ class AuthorsController < ApplicationController
     @authors = Author.all
   end
 
-  before_filter :zero_authors_or_authenticated, only: [:new, :create]
-  before_filter :require_login, except: [:new, :create]
+  # Original Blogger project thinks you shouldn't be able to create new users
+  # unless you're logged in. I've changed the project slightly to allow this.
+  #before_filter :zero_authors_or_authenticated, only: [:new, :create]
+  before_filter :require_login, except: [:new, :create, :index, :show]
 
   def zero_authors_or_authenticated
     unless Author.count == 0 || current_user

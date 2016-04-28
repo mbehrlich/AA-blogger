@@ -6,6 +6,18 @@ class ArticlesController < ApplicationController
   end
 
   before_filter :require_login, except: [:index, :show]
+  before_filter :require_user, only: [:destroy, :edit, :update]
+
+  def require_user
+    @article = Article.find(params[:id])
+    if @article.author_id == current_user.id
+      true
+    else
+      redirect_to root_path
+      false
+    end
+  end
+
 
   def show
     @article = Article.find(params[:id])
@@ -19,6 +31,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+    @article.author_id = current_user.id
     @article.save
     flash.notice = "Article '#{@article.title}' Created!"
     redirect_to article_path(@article)

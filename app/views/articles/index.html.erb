@@ -4,9 +4,21 @@
   <% @articles.each do |article| %>
     <li>
       <%= link_to article.title, article_path(article), class: 'article_title', id: "article_#{article.id}" %>
+      <ul>
+        <li>
+          <p>By <%= article.author.username %></p>
+        </li>
+      </ul>
     </li>
   <% end %>
 </ul>
+<br>
+<p>
+  <%= link_to "Authors", authors_path %>
+</p>
+<p>
+  <%= link_to "Tags", tags_path %>
+</p>
 <% if logged_in? %>
   <%= link_to "Create a New Article", new_article_path, class: "new_article" %>
 <% end %>

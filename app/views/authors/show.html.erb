@@ -10,6 +10,13 @@
   <%= @author.email %>
 </p>
 
-
+<ul id="articles">
+  <% @author.articles.each do |article| %>
+    <li>
+      <%= link_to article.title, article_path(article), class: 'article_title', id: "article_#{article.id}" %>
+    </li>
+  <% end %>
+</ul>
+<br>
 <%= link_to 'Edit', edit_author_path(@author) %> |
 <%= link_to 'Back', authors_path %>
